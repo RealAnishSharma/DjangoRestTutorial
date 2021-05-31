@@ -1,0 +1,62 @@
+{%extends 'base.html'%}
+{% load static%}
+
+{% block title %}
+product list
+{% endblock title %}
+
+{% block scripts %}
+<script src="{% static 'products/list.js' %}" defer></script>
+{% endblock scripts %}
+
+
+{% block content %}
+
+<div class="container">
+    <h3 style="color:blue">Sale on : products</h3><hr>
+    <div class="row">
+        
+        {% for obj in object_list%}
+        <div class="col-6">
+            <h5>{{obj.name}}</h5>
+            <p>{{obj.description}}</p>
+            <h5>Rs {{obj.price}}</h5>
+            <p>{{obj.updated}}</p>
+        </div>
+        <div class="col-4">
+            <img src="{{obj.image.url}}" alt="{{obj.name}}" width="100" height="100">
+        </div>
+        <div class="col-2">
+        <br><br>
+
+        <form method="POST" action="{% url 'products:delete_view' obj.id %}">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-success" value="Buy" />
+        </form>
+
+        </div>
+        <hr>
+        {%endfor%}
+
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+    </div>
+</div>
+{% endblock content %}

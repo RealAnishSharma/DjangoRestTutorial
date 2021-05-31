@@ -1,0 +1,28 @@
+{% load static %}
+{% url 'products:add_product' as path_to_sell_product %}
+{% url 'products:list_product' as path_to_product_list%}
+{% url 'home' as path_to_home%}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand {% if request.path == path_to_home%}active{% endif %}" href="{{path_to_home}}">Sales Go</a>
+
+    <div class="collapse navbar-collapse id=navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="#">Home</a>
+        <a class="nav-item nav-link {% if request.path == path_to_product_list%}active{% endif %}}" href="{{path_to_product_list}}">Buy</a>
+        <a class="nav-item nav-link {% if request.path == path_to_sell_product%}active{% endif %}" href="{{path_to_sell_product}}">Sell</a>
+        <a class="nav-item nav-link" href="#">Report</a>
+      </div>
+    </div>
+    
+    {% if request.user.is_authenticated %}
+      <div class="nav-item dropdown">
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <li><a class="dropdown-item {% if request.path == path_to_my_profile%}active{% endif %}" href="{{path_to_my_profile}}">Profile</a></li>
+          <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+      </div>
+    {% endif %}
+  </div>
+</nav>

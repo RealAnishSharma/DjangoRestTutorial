@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Login{% endblock title %}
+
+{% block scripts%}
+    <script>
+		function signupfunc(){
+			window.location.href='/signup'
+		}
+	</script>
+{% endblock scripts %}
+
+
+{% block content %}
+	{% if error_message %}
+		<div class="alert alert-danger" role="alert">
+			{{error_message}}
+		</div>
+	{% endif %}
+	
+	<div class="container">
+		<h4>Login</h4><hr>
+		<p>Please enter your credentials to login</p>
+		<form action="" method="POST">{%csrf_token%}
+			<label for="id_username">Username:</label><br>
+			<input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="id_username">
+			<br>
+			<label for="id_password">Password:</label><br>
+			<input type="password" name="password" autocomplete="current-password" required="" id="id_password">
+			<br>
+			<button type="submit" class="btn btn-success mt-3">Sign in</button>
+		</form>
+			<hr>
+			<p>Make an account right now !</p>
+			<button type="" class="btn btn-primary mt-3" onclick="signupfunc()">Sign up</button>
+	</div>
+{% endblock content %}
